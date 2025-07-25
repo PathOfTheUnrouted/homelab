@@ -1,0 +1,22 @@
+# docker-compose.yml
+version: "3"
+
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    network_mode: host  # Recommended for DNS performance
+    ports:
+      - "53:53/tcp"     # DNS (TCP)
+      - "53:53/udp"     # DNS (UDP)
+      - "80:80/tcp"     # Web interface
+      - "443:443/tcp"   # HTTPS
+    environment:
+      TZ: "America/New_York"          # REQUIRED: Set your timezone
+      WEBPASSWORD: "your_admin_pass"  # REQUIRED: Set web interface password
+      FTLCONF_dns_listeningMode: "all"
+    volumes:
+      - "./etc-pihole:/etc/pihole"    # Persistent config storage
+    cap_add:
+      - NET_ADMIN  # Required for DHCP/NTP features
+    restart: unless-stopped
