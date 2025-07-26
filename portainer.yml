@@ -1,0 +1,18 @@
+#recommended to use docker standalone for portainer install. install guide here https://pathoftheunrouted.gitbook.io/pathoftheunrouted/portainer-installation-guide even though thats most likely where you came from
+
+version: '3'
+
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+      - "9443:9443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+volumes:
+  portainer_data:
