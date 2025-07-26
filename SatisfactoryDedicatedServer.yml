@@ -1,0 +1,22 @@
+#SatisfactoryDedicatedServer docker compose yml
+version: "3.8"
+
+services:
+  satisfactory:
+    image: wolveix/satisfactory-server:latest
+    container_name: satisfactory
+    environment:
+      PGID: 1000
+      PUID: 1000
+      MAXPLAYERS: 4
+      UPDATE_ON_BOOT: "true"
+    volumes:
+      - ./config:/config
+    ports:
+      - "7777:7777/tcp"
+      - "7777:7777/udp"
+      - "8888:8888/tcp"
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    restart: unless-stopped
